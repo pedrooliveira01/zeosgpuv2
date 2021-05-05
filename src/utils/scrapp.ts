@@ -81,9 +81,9 @@ export async function Scrapper(url:urlprops){
     const html = await getHTML(url.url);   
     console.log('ok')
     if (html){
-      const listagem = html.substring(html.indexOf('<script type="application/ld+json">[{"@context":')+35, html.indexOf("}]</script>")+2);   
-      const dados = JSON.parse(listagem)
-      console.log(dados)
+      const listagem = html.substring(html.indexOf('<div id="prodarea"')+35, html.indexOf('<div class="clear">')-17); 
+      
+      console.log(listagem)
 
     }
   }  
