@@ -61,7 +61,9 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 		})
 
     await prisma.$disconnect;
-	await sendNotifications(data, alerta.type);
+	if (data.disponivel) {
+	  await sendNotifications(data, alerta.type);
+	}
 	return result;
 	
 }
@@ -96,7 +98,7 @@ async function createProdutos(data: Produtos, alerta: iAlertsprops){
 			}	
         });
 	
-		if (data.preco_desc){	      
+		if (data.disponivel) {	      
 		  await sendNotifications(data, alerta.type);
 		}
 	}catch(e){
@@ -110,27 +112,29 @@ const logConsole = ( produto : Produtos, alerta:iAlertsprops)=>{
 	const disponivelData = produto.disponivel ? 'Sim' : 'Nao'
 	const precoFormat = `R$ ${produto.preco_desc.toFixed(2)}`.padStart(11,' ')
 
-	switch(alerta.type){
-	  case msgtypeprops.withoutStock:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ESTOQUE'.padStart(13, ' ')}] {red - ${produto.titulo}}`);   		  
-		  break
-	  case msgtypeprops.withStock:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'EM ESTOQUE'.padStart(13, ' ')}] {magenta - ${produto.titulo}}`);  		            
-		  break
-	  case msgtypeprops.priceIncreased:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'AUMENTOU'.padStart(13, ' ')}] {yellow - ${produto.titulo}}`);  		  
-		  break
-	  case msgtypeprops.priceDecreased:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'ABAIXOU'.padStart(13, ' ')}] {green - ${produto.titulo}}`);  		  
-		  break
-	  case msgtypeprops.newProduct:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'NOVO'.padStart(13, ' ')}] {blue - ${produto.titulo}}`);  
-		  break       
-	  case msgtypeprops.noChange:
-		  console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ALTERACAO'.padStart(13, ' ')}] {gray - ${produto.titulo}}`); 
-		  break     
-	  default: 
-	     break;	  		           
-	}	
+	if (produto.disponivel){
+		switch(alerta.type){
+		case msgtypeprops.withoutStock:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ESTOQUE'.padStart(13, ' ')}] {red - ${produto.titulo}}`);   		  
+			break
+		case msgtypeprops.withStock:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'EM ESTOQUE'.padStart(13, ' ')}] {magenta - ${produto.titulo}}`);  		            
+			break
+		case msgtypeprops.priceIncreased:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'AUMENTOU'.padStart(13, ' ')}] {yellow - ${produto.titulo}}`);  		  
+			break
+		case msgtypeprops.priceDecreased:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'ABAIXOU'.padStart(13, ' ')}] {green - ${produto.titulo}}`);  		  
+			break
+		case msgtypeprops.newProduct:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'NOVO'.padStart(13, ' ')}] {blue - ${produto.titulo}}`);  
+			break       
+		case msgtypeprops.noChange:
+			console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ALTERACAO'.padStart(13, ' ')}] {gray - ${produto.titulo}}`); 
+			break     
+		default: 
+			break;	  		           
+		}	
+	}
 }
 

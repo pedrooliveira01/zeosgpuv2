@@ -45,12 +45,15 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops){
         parse_mode: 'Markdown'
       };
     await ids.forEach(
-      async function(id){
+      async function(id){            
+
+       const tempLink = data.site==='kabum'  ? `https://www.kabum.com.br${data.url}` : data.url;
+
        const newMsg = {
           titulo: '-' ,
           nome: data.titulo,
           preco: Format.bold(`R$ ${data.preco_desc.toString()}`),
-          link: Format.url('Clique aqui e compre!',`https://www.kabum.com.br${data.url}`)
+          link: Format.url('Clique aqui e compre!', tempLink)
        }
 
        switch (config.type) {
@@ -75,7 +78,7 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops){
 
         const msgFormatt = `${newMsg.titulo}\n\n${newMsg.preco}\n${newMsg.link}\n
         `
-        
+       
         await bot.sendMessage(Number(id.chatid), msgFormatt, opts);
       }
     )

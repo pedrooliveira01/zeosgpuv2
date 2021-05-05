@@ -1,4 +1,6 @@
 export {default as kabumArr} from './kabum'
+export {default as terabyteArr} from './terabyte'
+export {default as pichauArr} from './pichau'
 
 export const msgtypeprops = {
     withStock: "withStock", 
@@ -68,7 +70,9 @@ export const ZeosConfig =
         }
     },
     sites:{
-      kabum: true  
+      kabum: true,
+      terabyte: false,
+      pichau: true
     }      
 }
 
