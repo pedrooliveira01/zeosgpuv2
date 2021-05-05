@@ -21,8 +21,8 @@
     "@prisma/client": "^2.21.2",
     "@types/cheerio": "^0.22.28",
     "array-shuffle": "^2.0.0",
+    "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.6",
-    "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "got": "^11.8.2",
     "node-telegram-bot-api": "^0.53.0"

@@ -20,8 +20,8 @@ async function RunApp(){
 
   if (urls){   
     urls.forEach(function (url) {
-      promise = promise.then(function () {
-        ScrapperURL(url);
+      promise = promise.then(async function () {
+        await ScrapperURL(url);
         return new Promise(function (resolve) {
           setTimeout(resolve, 5105);
         });

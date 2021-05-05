@@ -1,5 +1,5 @@
 require('dotenv').config()
-import {ZeosConfig, iAlertsprops, msgtypeprops} from '../config'
+import {ZeosConfig, iAlertsprops, msgtypeprops, GetAlerta} from '../config'
 const tl = require('node-telegram-bot-api');
 import { Produtos, Telegram } from '@prisma/client'
 import {Format} from './formatter'
@@ -10,35 +10,13 @@ const bot = new tl(process.env.TELEGRAM_TOKEN, {polling:true})
 
 export async function sendNotifications(data: Produtos, ntf: string){
     if(ntf in ZeosConfig.alerts){
-        let config : iAlertsprops = {
-            ativo: false,
-            color: '',
-            msg: '',
-            msgCode: msgtypeprops.newProduct
-        }
-        switch(ntf){
-            case "withoutStock":
-                config = ZeosConfig.alerts.withoutStock;
-                break
-            case "withStock":
-                config = ZeosConfig.alerts.withStock;
-                break
-            case "priceIncreased":
-                config = ZeosConfig.alerts.priceIncreased;
-                break
-            case "priceDecreased":
-                config = ZeosConfig.alerts.priceDecreased;
-                break
-            case "newProduct":
-                config = ZeosConfig.alerts.newProduct;
-                break                
-        }
+        let alerta = GetAlerta(ntf)
+
         if(ZeosConfig.alerts.sendDiscordHook){
-            await sendDiscordMsg(data, config);
+            await sendDiscordMsg(data, alerta);
         }
-        if(ZeosConfig.alerts.sendTelegramMsg){
-            
-            await sendTelegramMsgs(data, config);
+        if(ZeosConfig.alerts.sendTelegramMsg){            
+           await sendTelegramMsgs(data, alerta);
         }
     }
     return;
@@ -75,7 +53,7 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops){
           link: Format.url('Clique aqui e compre!',`https://www.kabum.com.br${data.url}`)
        }
 
-       switch (config.msgCode) {
+       switch (config.type) {
            case msgtypeprops.newProduct:
                newMsg.titulo = ` 🆕 ${Format.bold(config.msg)} `;               
                break;         
