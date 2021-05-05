@@ -2,7 +2,6 @@ import {sendNotifications} from '../utils/notifications';
 import { PrismaClient, Produtos } from '@prisma/client';
 import {GetAlertaPrice, AlertaEmpty, iAlertsprops, msgtypeprops} from '../config'
 const chalk = require('chalk');
-var align = require('align-text');
 
 const prisma = new PrismaClient({
 	//log: ['query'],
