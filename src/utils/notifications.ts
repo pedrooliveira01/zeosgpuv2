@@ -8,7 +8,7 @@ import {Format} from './formatter'
 const { manageTelegram } = require('../databaseHandlers/telegram');
 const bot = new tl(process.env.TELEGRAM_TOKEN, {polling:true})
 
-export async function sendNotifications(data: Produtos, ntf: string){
+export async function sendNotifications(data: Produtos, ntf: string, oldData:Produtos | undefined){
     if(ntf in ZeosConfig.alerts){
         let alerta = GetAlerta(ntf)
 
@@ -16,7 +16,7 @@ export async function sendNotifications(data: Produtos, ntf: string){
             await sendDiscordMsg(data, alerta);
         }
         if(ZeosConfig.alerts.sendTelegramMsg){            
-           await sendTelegramMsgs(data, alerta);
+           await sendTelegramMsgs(data, alerta, oldData);
         }
     }
     return;
@@ -39,7 +39,7 @@ export async function sendDiscordMsg(data: Produtos, config:iAlertsprops){
     await webhookClient.send({embeds: [embed]})
     return;*/
 }
-export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops){
+export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldData:Produtos | undefined){
     let ids : Telegram[] = await manageTelegram({op:'all'})
     const opts = {
         parse_mode: 'Markdown'
@@ -50,35 +50,28 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops){
        const tempLink = data.site==='kabum'  ? `https://www.kabum.com.br${data.url}` : data.url;
 
        const newMsg = {
-          titulo: '-' ,
           nome: data.titulo,
-          preco: Format.bold(`R$ ${data.preco_desc.toString()}`),
-          link: Format.url('Clique aqui e compre!', tempLink)
+          preco: `R$ ${data.preco_desc.toString()}`,
+          oldpreco: oldData ? `R$ ${oldData.preco_desc.toString()}` : '0',
+          link: Format.url('Clique aqui e compre!', tempLink) 
        }
 
-       switch (config.type) {
-           case msgtypeprops.newProduct:
-               newMsg.titulo = ` 🆕 ${Format.bold(config.msg)} `;               
-               break;         
-           case msgtypeprops.priceIncreased:
-                newMsg.titulo = ` 😕 ${Format.bold(config.msg)} `;                       
-                break;                  
-           case msgtypeprops.priceDecreased:
-                newMsg.titulo = ` 🔥 ${Format.bold(config.msg)} `;                      
-                break;                  
-           case msgtypeprops.withStock:
-                newMsg.titulo = ` 📦 ${Format.bold(config.msg)} `;                       
-                break;    
-           case msgtypeprops.withoutStock:
-                newMsg.titulo = ` 😤 ${Format.bold(config.msg)} `;                     
-                break;                       
-           default:
-               break;
+       let percChange = '0';
+       if (oldData){
+            let temppercChange = ((Number(data.preco_desc) * 100) / Number(oldData.preco_desc));
+           
+            if (Number(oldData.preco_desc) > Number(data.preco_desc)) { // subiu
+                temppercChange = 100 - temppercChange 
+                temppercChange = temppercChange * (-1);
+            } else if  (Number(oldData.preco_desc) < Number(data.preco_desc)) {
+                temppercChange = temppercChange - 100;
+            }    
+            percChange = temppercChange.toFixed(2);
        }
-
-        const msgFormatt = `${newMsg.titulo}\n\n${newMsg.preco}\n${newMsg.link}\n
-        `
        
+        const linhaPreco = newMsg.oldpreco != '0' ?  `${Format.bold(newMsg.preco)}  ${Format.bold( percChange + '%')}` : Format.bold(newMsg.preco);
+        const msgFormatt = `${config.icon} ${config.msg}\n\n${linhaPreco}\n${newMsg.link}\n
+        `
         await bot.sendMessage(Number(id.chatid), msgFormatt, opts);
       }
     )

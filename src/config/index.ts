@@ -16,14 +16,16 @@ export interface iAlertsprops {
     ativo : boolean,
     msg: string,
     color: string,
-    type: string
+    type: string,
+    icon: string
 }
 
 export const AlertaEmpty : iAlertsprops = {
     ativo : false,
     msg: '',
     color: '',
-    type: 'newProduct'
+    type: 'newProduct',
+    icon: ''
 }
 
 export const ZeosConfig = 
@@ -34,39 +36,45 @@ export const ZeosConfig =
         sendTelegramMsg:true,
         withStock: {
             ativo: false,
-            msg : 'ACABOU O ESTOQUE!',
+            msg : 'Acabou o estoque!',
             color : '#ff0000',
             type : msgtypeprops.withStock,
+            icon : '😤'
         },
         withoutStock: {
             ativo: true,
-            msg : 'VOLTOU AO ESTOQUE!',
+            msg : 'Voltou ao estoque!',
             color : '#00ff00',
             type : msgtypeprops.withoutStock,
+            icon : '📦'
         },
         priceIncreased: {
-            ativo: false,
-            msg : 'PREÇO AUMENTOU!',
+            ativo: true,
+            msg : 'Preço subiu!',
             color : '#ffff00',
             type : msgtypeprops.priceIncreased,
+            icon: '😕'
         },
         priceDecreased: {
             ativo: true,
-            msg : 'PREÇO DIMINUIU!',
+            msg : 'Preço diminuiu!',
             color : '#0000ff',
             type : msgtypeprops.priceDecreased,
+            icon : '🔥'
         },
         newProduct:{
             ativo: true,
-            msg : 'NOVO PRODUTO!',
+            msg : 'Novo preço!',
             color : '#ff00ff',
             type : msgtypeprops.newProduct,
+            icon : '🆕'
         },
         noChange:{
             ativo: false,
-            msg : 'SEM ATERA��ES!',
+            msg : 'Sem alteração!',
             color : '#f0f0f0',
             type : msgtypeprops.noChange,
+            icon : ''
         }
     },
     sites:{

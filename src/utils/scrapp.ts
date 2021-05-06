@@ -34,7 +34,7 @@ async function saveDataPromise(data : kabumItemprops, site: string) {
     url: data.link_descricao,
     createdAt: new Date(),
     updatedAt: null              
-  }   
+  }     
 
   return new Promise(function (resolve) {
     dbStuff(produto);

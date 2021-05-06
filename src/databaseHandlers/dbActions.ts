@@ -9,7 +9,7 @@ const prisma = new PrismaClient({
 
 export async function dbStuff(data : Produtos){
 	try{
-		let Produtos = await hasProdutos(data);		
+		let Produtos = await hasProdutos(data);
 		if(Produtos){	
 			const result = GetAlertaPrice(Produtos.id>0, Number(Produtos.preco_desc), Number(data.preco_desc));
 			if (result.ativo){		      
@@ -99,7 +99,7 @@ async function createProdutos(data: Produtos, alerta: iAlertsprops){
         });
 	
 		if (data.disponivel) {	      
-		  await sendNotifications(data, alerta.type);
+		  await sendNotifications(data, alerta.type, undefined);
 		}
 	}catch(e){
 		console.log(e.message);
