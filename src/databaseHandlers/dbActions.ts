@@ -62,7 +62,7 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 
     await prisma.$disconnect;
 	if (data.disponivel) {
-	  await sendNotifications(data, alerta.type);
+	  await sendNotifications(data, alerta.type, old);
 	}
 	return result;
 	
