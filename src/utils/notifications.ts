@@ -70,8 +70,10 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldD
        }
        
         const linhaPreco = newMsg.oldpreco != '0' ?  `${Format.bold(newMsg.preco)}  ${Format.bold( percChange + '%')}` : Format.bold(newMsg.preco);
-        const msgFormatt = `${config.icon} ${config.msg}\n\n${linhaPreco}\n${newMsg.link}\n
-        `
+        let msgFormatt =  `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n`
+        if (data.site === 'terabyte'){
+            msgFormatt = `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n\n${newMsg.nome}`
+        }
         await bot.sendMessage(Number(id.chatid), msgFormatt, opts);
       }
     )
