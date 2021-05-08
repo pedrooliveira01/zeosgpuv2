@@ -3,8 +3,9 @@ import {urlprops} from './index';
 import { Produtos } from '@prisma/client'
 import {dbStuff} from '../databaseHandlers/dbActions';
 import { Decimal } from '@prisma/client/runtime';
+import {ScrapperTerabyte} from './scrapperTerabyte';
 
-interface kabumItemprops {
+export interface kabumItemprops {
     preco: number,
     preco_desconto: number,
     nome: string,
@@ -23,7 +24,7 @@ interface pichauItemprops {
     offers:pichaOffersprops[]
   }  
 
-async function saveDataPromise(data : kabumItemprops, site: string) {
+export async function saveDataPromise(data : kabumItemprops, site: string) {
   const produto : Produtos = {
     id: 0,
     titulo: data.nome,
@@ -77,15 +78,7 @@ export async function Scrapper(url:urlprops){
   }
 
   if (url.type === 'terabyte'){  
-    console.log('get')
-    const html = await getHTML(url.url);   
-    console.log('ok')
-    if (html){
-      const listagem = html.substring(html.indexOf('<div id="prodarea"')+35, html.indexOf('<div class="clear">')-17); 
-      
-      console.log(listagem)
-
-    }
+    await ScrapperTerabyte(url);
   }  
 
   if (url.type === 'pichau'){  

@@ -20,11 +20,15 @@
   "dependencies": {
     "@prisma/client": "^2.21.2",
     "@types/cheerio": "^0.22.28",
+    "@types/puppeteer": "^5.4.3",
     "array-shuffle": "^2.0.0",
     "chalk": "^4.1.1",
-    "cheerio": "^1.0.0-rc.6",
+    "cheerio": "^1.0.0-rc.9",
     "dotenv": "^8.2.0",
     "got": "^11.8.2",
-    "node-telegram-bot-api": "^0.53.0"
+    "node-telegram-bot-api": "^0.53.0",
+    "puppeteer": "^9.1.1",
+    "puppeteer-extra": "^3.1.18",
+    "puppeteer-extra-plugin-stealth": "^2.7.8"
   }
 }
