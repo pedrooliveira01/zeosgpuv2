@@ -37,9 +37,13 @@ export async function saveDataPromise(data : kabumItemprops, site: string) {
     updatedAt: null              
   }     
 
-  return new Promise(function (resolve) {
-    return dbStuff(produto);
-  });
+  if (!produto.titulo.includes('PC ')){
+    return new Promise(function (resolve) {
+      return dbStuff(produto);
+    });
+  } else {
+    return 
+  }
 }
 
 async function getHTML(url:string){
