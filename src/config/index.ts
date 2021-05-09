@@ -102,20 +102,3 @@ export const GetAlerta = (_type:string) => {
     return AlertaEmpty
 }
 
-export const GetAlertaPrice = (existeReg:boolean,_precoOLD:number | null, _precoNEW:number | null) => {
-    let result : iAlertsprops;
-    if (!existeReg){
-        result = ZeosConfig.alerts.newProduct; 
-    }else if (!_precoNEW && _precoOLD){   
-        result = ZeosConfig.alerts.withoutStock;
-    }else if (_precoNEW && !_precoOLD){
-        result = ZeosConfig.alerts.withStock;
-    }else if(_precoNEW && _precoOLD && _precoOLD < _precoNEW){
-        result = ZeosConfig.alerts.priceIncreased;
-    }else if(_precoNEW && _precoOLD &&_precoOLD > _precoNEW){
-        result = ZeosConfig.alerts.priceDecreased;
-    } else {
-        result = ZeosConfig.alerts.noChange
-    }
-    return result
-}
