@@ -35,18 +35,18 @@ export const ZeosConfig =
         sendDiscordHook:false,
         sendTelegramMsg:true,
         withStock: {
-            ativo: false,
-            msg : 'Acabou o estoque!',
-            color : '#ff0000',
-            type : msgtypeprops.withStock,
-            icon : '😤'
-        },
-        withoutStock: {
             ativo: true,
             msg : 'Voltou ao estoque!',
+            color : '#ff0000',
+            type : msgtypeprops.withStock,
+            icon : '📦'
+        },
+        withoutStock: {
+            ativo: true,            
+            msg : 'Acabou o estoque!',
             color : '#00ff00',
             type : msgtypeprops.withoutStock,
-            icon : '📦'
+            icon : '😤'
         },
         priceIncreased: {
             ativo: true,

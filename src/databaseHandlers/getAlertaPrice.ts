@@ -29,11 +29,11 @@ export const GetAlertaPrice = (oldData: Produtos | undefined, newData : Produtos
            result = ZeosConfig.alerts.withStock;
         }           
 
-     // continua disponivel porem baixou o preco   
+     // continua disponivel porem aumentou o preco     
     } else if(newData.disponivel && aumentou){
         result = ZeosConfig.alerts.priceIncreased;
 
-    // continua disponivel porem aumentou o preco    
+    // continua disponivel porem baixou o preco   
     } else if(newData.disponivel && baixou){
         result = ZeosConfig.alerts.priceDecreased;
     } else {
