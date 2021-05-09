@@ -86,6 +86,7 @@ async function hasProdutos(data : Produtos){
 async function createProdutos(data: Produtos, alerta: iAlertsprops){
 	const {id, ...props} = data;
 	try{
+		await prisma.$connect;
 		await prisma.produtos.create({
             data:{
 				...props
@@ -97,7 +98,7 @@ async function createProdutos(data: Produtos, alerta: iAlertsprops){
 				} 
 			}	
         });
-	
+		await prisma.$disconnect;
 		if (data.disponivel) {	      
 		  await sendNotifications(data, alerta.type, undefined);
 		}

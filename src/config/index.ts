@@ -64,7 +64,7 @@ export const ZeosConfig =
         },
         newProduct:{
             ativo: true,
-            msg : 'Novo preço!',
+            msg : 'Novo produto!',
             color : '#ff00ff',
             type : msgtypeprops.newProduct,
             icon : '🆕'
