@@ -23,7 +23,7 @@ async function RunApp(){
       promise = promise.then(async function () {
         await ScrapperURL(url);
         return new Promise(function (resolve) {
-          setTimeout(resolve, 5105);
+          setTimeout(resolve, 3105);
         });
       });
     });
