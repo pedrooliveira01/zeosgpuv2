@@ -38,7 +38,7 @@ export async function saveDataPromise(data : kabumItemprops, site: string) {
   }     
 
   return new Promise(function (resolve) {
-    dbStuff(produto);
+    return dbStuff(produto);
   });
 }
 
@@ -70,7 +70,7 @@ export async function Scrapper(url:urlprops){
       console.log('Total de produtos: ', dados.length)
       await dados.forEach(async function(item:kabumItemprops){
         var promise = Promise.resolve();
-        promise.then(async function () {
+        await promise.then(async function () {
           return saveDataPromise(item, url.type)
         });
       });
@@ -89,7 +89,7 @@ export async function Scrapper(url:urlprops){
       console.log('Total de produtos: ', dados.length)
       await dados.forEach(async function(item:pichauItemprops){
         var promise = Promise.resolve();
-        promise.then(async function () {
+        await promise.then(async function () {
           const itemData :kabumItemprops = {
              disponibilidade: item.offers[0].availability != 'http://schema.org/OutOfStock',
              link_descricao: item.offers[0].url,
