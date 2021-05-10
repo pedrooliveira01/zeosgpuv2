@@ -7,7 +7,7 @@ import {ZeosConfig} from './config';
 async function RunApp(url:urlprops){
   await Scrapper(url);
   return new Promise(function (resolve) {
-    setTimeout(resolve, 5000);
+    setTimeout(resolve, 1000);
   });
 }
 

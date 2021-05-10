@@ -6,29 +6,29 @@ export const GetAlertaPrice = (oldData: Produtos | undefined, newData : Produtos
     const existeReg = oldData && oldData.id > 0;
     const aumentou = oldData && Number(newData.preco_desc) > Number(oldData.preco_desc);
     const baixou = oldData && Number(newData.preco_desc) < Number(oldData.preco_desc);
-    const mudouDisp = oldData && newData.disponivel !== oldData.disponivel;
-
+    const ficouDisponivel = oldData && newData.disponivel && !oldData.disponivel;
+    const ficouIndisponivel = oldData && !newData.disponivel && oldData.disponivel;
 
    // Não existe o produto
     if (!existeReg){
         result = ZeosConfig.alerts.newProduct; 
 
     // Se tornou indisponivel    
-    } else if (mudouDisp && !newData.disponivel){   
+    } else if (ficouIndisponivel){   
         result = ZeosConfig.alerts.withoutStock;
 
     // Tornou disponivel    
-    } else if (mudouDisp && newData.disponivel){
-         // e baixou o preco
+    } else if (ficouDisponivel){
+      /*   // e baixou o preco
         if (baixou){
            result = ZeosConfig.alerts.priceDecreased;
          // e aumentou o preco  
         } else if (aumentou){
           result = ZeosConfig.alerts.priceIncreased;
           // preço nao mudou so ficou disponivel
-        } else {
+        } else {*/
            result = ZeosConfig.alerts.withStock;
-        }           
+      //  }          
 
      // continua disponivel porem aumentou o preco     
     } else if(newData.disponivel && aumentou){

@@ -67,7 +67,7 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldD
         msgFormatt = `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n\n${newMsg.nome}`
     }
 
-    await bot.sendTelegram(msgFormatt);
+    await sendTelegram(msgFormatt);
 }
 
 export async function sendTelegram(msg: string){

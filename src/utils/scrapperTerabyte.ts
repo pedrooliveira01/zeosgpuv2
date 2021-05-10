@@ -29,7 +29,7 @@ export async function ScrapperTerabyte(url:urlprops){
     const $ = cheerio.load(body);
     const list = await  $('div#produto').find('div.commerce_columns_item_inner');
     
-    console.log(`Link: ${url.url} - Total de produtos: `, list.length)
+    //console.log(`Link: ${url.url} - Total de produtos: `, list.length)
 
     await list.each(async (i: number, e:any) => {
       const dados = {

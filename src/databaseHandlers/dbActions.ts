@@ -115,26 +115,27 @@ const logConsole = async ( produto : Produtos, alerta:iAlertsprops)=>{
 	const disponivelChalk = produto.disponivel ? 'green' : 'gray'
 	const disponivelData = produto.disponivel ? 'Sim' : 'Nao'
 	const precoFormat = `R$ ${produto.preco_desc.toFixed(2)}`.padStart(11,' ')
+	const siteFormat = `[${produto.site.padStart(8,' ')}]`
 
 	if (produto.disponivel){
 		switch(alerta.type){
 		case msgtypeprops.withoutStock:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ESTOQUE'.padStart(13, ' ')}] {red - ${produto.titulo}}`);   		  
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ESTOQUE'.padStart(13, ' ')}] {red - ${produto.titulo}}`);   		  
 			break
 		case msgtypeprops.withStock:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'EM ESTOQUE'.padStart(13, ' ')}] {magenta - ${produto.titulo}}`);  		            
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'EM ESTOQUE'.padStart(13, ' ')}] {magenta - ${produto.titulo}}`);  		            
 			break
 		case msgtypeprops.priceIncreased:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'AUMENTOU'.padStart(13, ' ')}] {yellow - ${produto.titulo}}`);  		  
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'AUMENTOU'.padStart(13, ' ')}] {yellow - ${produto.titulo}}`);  		  
 			break
 		case msgtypeprops.priceDecreased:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'ABAIXOU'.padStart(13, ' ')}] {green - ${produto.titulo}}`);  		  
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'ABAIXOU'.padStart(13, ' ')}] {green - ${produto.titulo}}`);  		  
 			break
 		case msgtypeprops.newProduct:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'NOVO'.padStart(13, ' ')}] {blue - ${produto.titulo}}`);  
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'NOVO'.padStart(13, ' ')}] {blue - ${produto.titulo}}`);  
 			break       
 		case msgtypeprops.noChange:
-			await console.log(chalk`{magenta [${produto.site}]} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ALTERACAO'.padStart(13, ' ')}] {gray - ${produto.titulo}}`); 
+			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ALTERACAO'.padStart(13, ' ')}] {gray - ${produto.titulo}}`); 
 			break     
 		default: 
 			break;	  		           

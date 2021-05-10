@@ -71,7 +71,7 @@ export async function Scrapper(url:urlprops){
     if (html){
       const listagem = html.substring(html.indexOf("const listagemDados =")+21, html.indexOf("const listagemErro "));       
       const dados : kabumItemprops[] =  JSON.parse(listagem)
-      console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
+      //console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
       await dados.forEach(async function(item:kabumItemprops){
         var promise = Promise.resolve();
         await promise.then(async function () {
@@ -90,7 +90,7 @@ export async function Scrapper(url:urlprops){
     if (html){
       const listagem = html.substring(html.indexOf('<script type="application/ld+json">[{"@context":')+35, html.indexOf("}]</script>")+2);   
       const dados : pichauItemprops[] = JSON.parse(listagem)
-      console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
+      //console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
       await dados.forEach(async function(item:pichauItemprops){
         var promise = Promise.resolve();
         await promise.then(async function () {
