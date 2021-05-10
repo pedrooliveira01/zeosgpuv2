@@ -8,6 +8,8 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 
 puppeteer.use(StealthPlugin())
 
+process.setMaxListeners(Infinity);
+
 export async function ScrapperTerabyte(url:urlprops){   
   const browser = await puppeteer.launch({
     headless: true,
@@ -23,10 +25,11 @@ export async function ScrapperTerabyte(url:urlprops){
     const page = await browser.newPage();
     await page.goto(url.url);  
     const body = `<div id="produto"> ${await page.$eval('#prodarea', (e:any) => e.innerHTML)} </div>`;
+    await browser.close();  
     const $ = cheerio.load(body);
     const list = await  $('div#produto').find('div.commerce_columns_item_inner');
     
-    console.log('Total de produtos: ', list.length)
+    console.log(`Link: ${url.url} - Total de produtos: `, list.length)
 
     await list.each(async (i: number, e:any) => {
       const dados = {
@@ -56,7 +59,7 @@ export async function ScrapperTerabyte(url:urlprops){
     console.log(error);
     browser.close();
   } finally {
-    browser.close();  
+    
   }
 
 }

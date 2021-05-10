@@ -9,7 +9,7 @@ function sleep(millis:number) {
 }
 
 async function ScrapperURL(url:urlprops) {  
-  console.log('LINK: ', url.url)
+  //console.log('LINK: ', url.url)
   await Scrapper(url);
 }
 
@@ -21,9 +21,10 @@ async function RunApp(){
   if (urls){   
     urls.forEach(function (url) {
       promise = promise.then(async function () {
+       // console.log(url.type)
         await ScrapperURL(url);
         return new Promise(function (resolve) {
-          setTimeout(resolve, 3105);
+          setTimeout(resolve, 100);
         });
       });
     });
