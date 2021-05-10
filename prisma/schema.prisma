@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:../database/banco.db?timeout=5000&connection_limit=10"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
