@@ -79,8 +79,8 @@ export const ZeosConfig =
     },
     sites:{
       kabum: true,
-      terabyte: false,
-      pichau: false
+      terabyte: true,
+      pichau: true
     }      
 }
 

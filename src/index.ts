@@ -1,38 +1,66 @@
 
-import {genUrls, urlprops} from './utils/index'
+import {genUrlsKabum,genUrlsPichau,genUrlsTerabyte, urlprops} from './utils/index'
 import {Scrapper} from './utils/scrapp'
-import {startTelegramBot, sendTelegram} from './utils/notifications'
+import {startTelegramBot} from './utils/notifications'
 import {ZeosConfig} from './config';
 
-function sleep(millis:number) {
-  return new Promise(resolve => setTimeout(resolve, millis));
-}
-
-async function ScrapperURL(url:urlprops) {  
-  //console.log('LINK: ', url.url)
+async function RunApp(url:urlprops){
   await Scrapper(url);
+  return new Promise(function (resolve) {
+    setTimeout(resolve, 5000);
+  });
 }
 
 
-async function RunApp(){
-  const urls:urlprops[] = genUrls();
+async function RunAppKabum(){
+  const urls:urlprops[] = genUrlsKabum();
   var promise = Promise.resolve();
 
   if (urls){   
     urls.forEach(function (url) {
       promise = promise.then(async function () {
-       // console.log(url.type)
-        await ScrapperURL(url);
-        return new Promise(function (resolve) {
-          setTimeout(resolve, 100);
-        });
+        await RunApp(url)        
       });
     });
 
     promise.then(function () {
-      RunApp();
-    });           
- 
+      RunAppKabum();
+    });          
+  }  
+}
+
+async function RunAppPichau(){
+  const urls:urlprops[] = genUrlsPichau();
+  var promise = Promise.resolve();
+
+  if (urls){   
+    urls.forEach(function (url) {
+      promise = promise.then(async function () {
+        await RunApp(url)        
+      });
+    });
+
+    promise.then(function () {
+      RunAppPichau();
+    });          
+  }  
+
+}
+
+async function RunAppTerabyte(){ 
+  const urls:urlprops[] = genUrlsTerabyte();
+  var promise = Promise.resolve();
+
+  if (urls){   
+    urls.forEach(function (url) {
+      promise = promise.then(async function () {
+        await RunApp(url)        
+      });
+    });
+
+    promise.then(function () {
+      RunAppTerabyte();
+    });          
   }  
 }
 
@@ -43,7 +71,18 @@ async function main(){
     if(ZeosConfig.alerts.sendTelegramMsg) {
       startTelegramBot();       
     }
-    RunApp();      
+
+    if (ZeosConfig.sites.kabum){
+      RunAppKabum();     
+    }
+
+    if (ZeosConfig.sites.pichau){
+      RunAppPichau();
+    }
+
+    if (ZeosConfig.sites.terabyte){
+      RunAppTerabyte();
+    }
    
   }catch(e){
     console.log(e.message);
