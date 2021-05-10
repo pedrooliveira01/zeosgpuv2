@@ -18,7 +18,7 @@ export async function dbStuff(data : Produtos){
 			return result
 		}else{
 			const result = GetAlertaPrice(undefined,data);
-			if (result.ativo){
+			if (data.disponivel){
 			  await createProdutos(data, result);			  
 			}
 			logConsole(data,result)

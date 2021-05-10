@@ -41,39 +41,39 @@ export async function sendDiscordMsg(data: Produtos, config:iAlertsprops){
 }
 export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldData:Produtos | undefined){
     let ids : Telegram[] = await manageTelegram({op:'all'})
+
     const opts = {
         parse_mode: 'Markdown'
       };
+
+    const tempLink = data.site==='kabum'  ? `https://www.kabum.com.br${data.url}` : data.url;
+
+    const newMsg = {
+       nome: data.titulo,
+       preco: `R$ ${data.preco_desc.toString()}`,
+       oldpreco: oldData ? `R$ ${oldData.preco_desc.toString()}` : '0',
+       link: Format.url('Clique aqui e compre!', tempLink) ,
+       percChange : '0'
+    }
+
+    let temppercChange = 0
+    if (oldData){
+        if (Number(oldData.preco_desc) > 0) {
+            temppercChange = ((Number(data.preco_desc) * 100) / Number(oldData.preco_desc)) - 100;
+        } 
+        newMsg.percChange = temppercChange.toFixed(2);
+     }
+    
+    
+    const linhaPreco = temppercChange != 0  ?  `${Format.bold(newMsg.preco)}  (${Format.bold( newMsg.percChange + '%')})` : Format.bold(newMsg.preco);
+
+    let msgFormatt =  `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n`
+    if (data.site === 'terabyte'){
+        msgFormatt = `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n\n${newMsg.nome}`
+    }
+
     await ids.forEach(
-      async function(id){            
-
-       const tempLink = data.site==='kabum'  ? `https://www.kabum.com.br${data.url}` : data.url;
-
-       const newMsg = {
-          nome: data.titulo,
-          preco: `R$ ${data.preco_desc.toString()}`,
-          oldpreco: oldData ? `R$ ${oldData.preco_desc.toString()}` : '0',
-          link: Format.url('Clique aqui e compre!', tempLink) 
-       }
-
-       let percChange = '0';
-       if (oldData){
-            let temppercChange = ((Number(data.preco_desc) * 100) / Number(oldData.preco_desc));
-           
-            if (Number(oldData.preco_desc) > Number(data.preco_desc)) { // subiu
-                temppercChange = 100 - temppercChange 
-                temppercChange = temppercChange * (-1);
-            } else if  (Number(oldData.preco_desc) < Number(data.preco_desc)) {
-                temppercChange = temppercChange - 100;
-            }    
-            percChange = temppercChange.toFixed(2);
-       }
-       
-        const linhaPreco = newMsg.oldpreco != '0' ?  `${Format.bold(newMsg.preco)}  ${Format.bold( percChange + '%')}` : Format.bold(newMsg.preco);
-        let msgFormatt =  `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n`
-        if (data.site === 'terabyte'){
-            msgFormatt = `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n\n${newMsg.nome}`
-        }
+      async function(id){          
         await bot.sendMessage(Number(id.chatid), msgFormatt, opts);
       }
     )

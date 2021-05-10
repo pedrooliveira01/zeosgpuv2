@@ -3,11 +3,12 @@ import {iAlertsprops, ZeosConfig} from '../config/index'
 
 export const GetAlertaPrice = (oldData: Produtos | undefined, newData : Produtos) => {
     let result : iAlertsprops;
-    const existeReg = !oldData || oldData.id > 0;
+    const existeReg = oldData && oldData.id > 0;
     const aumentou = oldData && Number(newData.preco_desc) > Number(oldData.preco_desc);
     const baixou = oldData && Number(newData.preco_desc) < Number(oldData.preco_desc);
     const mudouDisp = oldData && newData.disponivel !== oldData.disponivel;
- 
+
+
    // Não existe o produto
     if (!existeReg){
         result = ZeosConfig.alerts.newProduct; 
