@@ -51,20 +51,24 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 	}	
 
 	if ( alerta.type !== msgtypeprops.noChange) {
-		await prisma.$connect;
+		try{
+			await prisma.$connect;
 
-		const result = await prisma.produtos.update({
-				where:{
-					id: old.id
-				},
-				data: updateData		
-			})
+			const result = await prisma.produtos.update({
+					where:{
+						id: old.id
+					},
+					data: updateData		
+				})
 
-		await prisma.$disconnect;
-		if (data.disponivel) {
-		  await sendNotifications(data, alerta.type, old);
-		}
-		return result;
+			await prisma.$disconnect;
+			if (data.disponivel) {
+			await sendNotifications(data, alerta.type, old);
+			}
+			return result;
+		}catch(e){
+			console.log(e.message);
+		}		
 	} else {
 		return
 	}

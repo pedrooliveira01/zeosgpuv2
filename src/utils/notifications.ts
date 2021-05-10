@@ -78,11 +78,15 @@ export async function sendTelegram(msg: string){
       };
 
 
-    await ids.forEach(
-      async function(id){          
-        await bot.sendMessage(Number(id.chatid), msg, opts);
-      }
-    )
+    try {
+        await ids.forEach(
+          async function(id){          
+            await bot.sendMessage(Number(id.chatid), msg, opts);
+          }
+        )        
+    } catch (error) {
+        
+    }  
 }
 
 export async function startTelegramBot(){
