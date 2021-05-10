@@ -1,7 +1,7 @@
 
 import {genUrls, urlprops} from './utils/index'
 import {Scrapper} from './utils/scrapp'
-import {startTelegramBot} from './utils/notifications'
+import {startTelegramBot, sendTelegram} from './utils/notifications'
 import {ZeosConfig} from './config';
 
 function sleep(millis:number) {

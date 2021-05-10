@@ -40,11 +40,6 @@ export async function sendDiscordMsg(data: Produtos, config:iAlertsprops){
     return;*/
 }
 export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldData:Produtos | undefined){
-    let ids : Telegram[] = await manageTelegram({op:'all'})
-
-    const opts = {
-        parse_mode: 'Markdown'
-      };
 
     const tempLink = data.site==='kabum'  ? `https://www.kabum.com.br${data.url}` : data.url;
 
@@ -72,12 +67,22 @@ export async function sendTelegramMsgs(data: Produtos, config:iAlertsprops, oldD
         msgFormatt = `${config.icon} ${config.msg}  ${`- ${data.site}`} \n\n${linhaPreco}\n${newMsg.link}\n\n${newMsg.nome}`
     }
 
+    await bot.sendTelegram(msgFormatt);
+}
+
+export async function sendTelegram(msg: string){
+    let ids : Telegram[] = await manageTelegram({op:'all'})
+
+    const opts = {
+        parse_mode: 'Markdown'
+      };
+
+
     await ids.forEach(
       async function(id){          
-        await bot.sendMessage(Number(id.chatid), msgFormatt, opts);
+        await bot.sendMessage(Number(id.chatid), msg, opts);
       }
     )
-
 }
 
 export async function startTelegramBot(){
