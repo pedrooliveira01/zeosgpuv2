@@ -37,7 +37,7 @@ export async function saveDataPromise(data : kabumItemprops, site: string) {
     updatedAt: null              
   }     
 
-  if (!produto.titulo.includes('PC ')){
+  if (!produto.titulo.includes('PC ') &&!produto.titulo.includes('omputador')){
     return new Promise(function (resolve) {
       return dbStuff(produto);
     });
