@@ -4,10 +4,10 @@ import {Scrapper} from './utils/scrapp'
 import {startTelegramBot} from './utils/notifications'
 import {ZeosConfig} from './config';
 
-async function RunApp(url:urlprops){
+async function RunApp(url:urlprops, timeout:number){
   await Scrapper(url);
   return new Promise(function (resolve) {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, timeout);
   });
 }
 
@@ -19,7 +19,7 @@ async function RunAppKabum(){
   if (urls){   
     urls.forEach(function (url) {
       promise = promise.then(async function () {
-        await RunApp(url)        
+        await RunApp(url, 3000)        
       });
     });
 
@@ -36,7 +36,7 @@ async function RunAppPichau(){
   if (urls){   
     urls.forEach(function (url) {
       promise = promise.then(async function () {
-        await RunApp(url)        
+        await RunApp(url, 2000)        
       });
     });
 
@@ -54,7 +54,7 @@ async function RunAppTerabyte(){
   if (urls){   
     urls.forEach(function (url) {
       promise = promise.then(async function () {
-        await RunApp(url)        
+        await RunApp(url, 2000)        
       });
     });
 
