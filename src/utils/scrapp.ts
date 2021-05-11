@@ -38,12 +38,11 @@ export async function saveDataPromise(data : kabumItemprops, site: string) {
   }     
 
   if (!produto.titulo.includes('PC ') &&!produto.titulo.includes('omputador')){
-    return new Promise(function (resolve) {
-      return dbStuff(produto);
-    });
-  } else {
-    return 
-  }
+  //  return new Promise(function (resolve) {
+      await dbStuff(produto);
+    //});
+  } 
+
 }
 
 async function getHTML(url:string){
@@ -73,10 +72,10 @@ export async function Scrapper(url:urlprops){
       const dados : kabumItemprops[] =  JSON.parse(listagem)
       //console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
       await dados.forEach(async function(item:kabumItemprops){
-        var promise = Promise.resolve();
-        await promise.then(async function () {
-          return saveDataPromise(item, url.type)
-        });
+       // var promise = Promise.resolve();
+       // await promise.then(async function () {
+          await saveDataPromise(item, url.type)
+       // });
       });
     }
   }
@@ -92,8 +91,8 @@ export async function Scrapper(url:urlprops){
       const dados : pichauItemprops[] = JSON.parse(listagem)
       //console.log(`Link: ${url.url} - Total de produtos: `, dados.length)
       await dados.forEach(async function(item:pichauItemprops){
-        var promise = Promise.resolve();
-        await promise.then(async function () {
+     //   var promise = Promise.resolve();
+     //   await promise.then(async function () {
           const itemData :kabumItemprops = {
              disponibilidade: item.offers[0].availability != 'http://schema.org/OutOfStock',
              link_descricao: item.offers[0].url,
@@ -102,8 +101,8 @@ export async function Scrapper(url:urlprops){
              preco_desconto: item.offers[0].price
           }
 
-          return saveDataPromise(itemData, url.type)
-        });
+          await saveDataPromise(itemData, url.type)
+      //  });
       });
 
     }
