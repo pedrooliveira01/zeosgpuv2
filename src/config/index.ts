@@ -1,32 +1,8 @@
 export {default as kabumArr} from './kabum'
 export {default as terabyteArr} from './terabyte'
 export {default as pichauArr} from './pichau'
+import {cMsgtypeprops, cAlertaEmpty} from '../utils/types'
 
-export const msgtypeprops = {
-    withStock: "withStock", 
-    withoutStock: "withoutStock",
-    priceIncreased: "priceIncreased",
-    priceDecreased: "priceDecreased" ,
-    newProduct:"newProduct",
-    noChange:"noChange",
-    empty: ""
-}
-
-export interface iAlertsprops {
-    ativo : boolean,
-    msg: string,
-    color: string,
-    type: string,
-    icon: string
-}
-
-export const AlertaEmpty : iAlertsprops = {
-    ativo : false,
-    msg: '',
-    color: '',
-    type: 'newProduct',
-    icon: ''
-}
 
 export const ZeosConfig = 
 {
@@ -38,42 +14,42 @@ export const ZeosConfig =
             ativo: true,
             msg : 'Voltou ao estoque!',
             color : '#ff0000',
-            type : msgtypeprops.withStock,
+            type : cMsgtypeprops.withStock,
             icon : '📦'
         },
         withoutStock: {
             ativo: true,            
             msg : 'Acabou o estoque!',
             color : '#00ff00',
-            type : msgtypeprops.withoutStock,
+            type : cMsgtypeprops.withoutStock,
             icon : '😤'
         },
         priceIncreased: {
             ativo: true,
             msg : 'Preço subiu!',
             color : '#ffff00',
-            type : msgtypeprops.priceIncreased,
+            type : cMsgtypeprops.priceIncreased,
             icon: '😕'
         },
         priceDecreased: {
             ativo: true,
             msg : 'Preço diminuiu!',
             color : '#0000ff',
-            type : msgtypeprops.priceDecreased,
+            type : cMsgtypeprops.priceDecreased,
             icon : '🔥'
         },
         newProduct:{
             ativo: true,
             msg : 'Novo produto!',
             color : '#ff00ff',
-            type : msgtypeprops.newProduct,
+            type : cMsgtypeprops.newProduct,
             icon : '🆕'
         },
         noChange:{
             ativo: false,
             msg : 'Sem alteração!',
             color : '#f0f0f0',
-            type : msgtypeprops.noChange,
+            type : cMsgtypeprops.noChange,
             icon : ''
         }
     },
@@ -99,6 +75,6 @@ export const GetAlerta = (_type:string) => {
 	    default: 
 	       break;	                        
     }
-    return AlertaEmpty
+    return cAlertaEmpty
 }
 

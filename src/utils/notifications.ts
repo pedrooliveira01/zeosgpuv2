@@ -1,5 +1,6 @@
 require('dotenv').config()
-import {ZeosConfig, iAlertsprops, msgtypeprops, GetAlerta} from '../config'
+import {ZeosConfig, GetAlerta} from '../config'
+import {iAlertsprops } from './types'
 const tl = require('node-telegram-bot-api');
 import { Produtos, Telegram } from '@prisma/client'
 import {Format} from './formatter'
@@ -79,11 +80,9 @@ export async function sendTelegram(msg: string){
 
 
     try {
-        await ids.forEach(
-          async function(id){          
-            await bot.sendMessage(Number(id.chatid), msg, opts);
-          }
-        )        
+        for (const [idx, id] of ids.entries()) {
+           await bot.sendMessage(Number(id.chatid), msg, opts);
+        }    
     } catch (error) {
         
     }  

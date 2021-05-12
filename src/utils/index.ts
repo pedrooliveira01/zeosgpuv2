@@ -1,9 +1,6 @@
 import {kabumArr,terabyteArr,pichauArr} from '../config'
+import {siteArr, urlprops} from './types'
 
-export interface urlprops {
-  url: string,
-  type: string
-}
 
 export function genUrlsKabum(){  
   return genUrls(kabumArr,'kabum')
@@ -17,10 +14,10 @@ export function genUrlsPichau(){
   return genUrls(pichauArr,'pichau')  
 }
 
-function genUrls(Arr:string[], type:string){
-  let urls = []; 
-  for(var str of Arr){        
-    urls.push({url: str, type: type})
+function genUrls(Arr:siteArr[], type:string){
+  let urls : urlprops[] = []; 
+  for(var data of Arr){        
+    urls.push({url:data, type: type})
   }
   return urls;
 }

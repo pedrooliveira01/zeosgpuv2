@@ -1,6 +1,6 @@
 import {sendNotifications} from '../utils/notifications';
 import { PrismaClient, Produtos } from '@prisma/client';
-import { AlertaEmpty, iAlertsprops, msgtypeprops} from '../config'
+import { cAlertaEmpty, iAlertsprops, cMsgtypeprops} from '../utils/types'
 import {GetAlertaPrice} from './getAlertaPrice';
 const chalk = require('chalk');
 
@@ -12,26 +12,24 @@ export async function dbStuff(data : Produtos){
 	try{
 		let Produtos = await hasProdutos(data);
 		if(Produtos){	
-			const result = GetAlertaPrice(Produtos, data);			  
-			await updateProdutos(Produtos, data, result);			
+			const result = await GetAlertaPrice(Produtos, data);			  
+			await updateProdutos(Produtos, data, result);	
 			logConsole(data,result)
-			return result
 		}else{
-			const result = GetAlertaPrice(undefined,data);
-			if (data.disponivel){
-			  await createProdutos(data, result);			  
-			}
+			const result = await GetAlertaPrice(undefined,data);			
+			await createProdutos(data, result);	
 			logConsole(data,result)
-			return AlertaEmpty
 		}
 	}catch(e){
 		console.log(e.message)
-		return AlertaEmpty
-	}
+	}finally{
+        return
+    }
 }
 
 async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprops){
-	
+
+
 	const {id,createdAt,updatedAt,titulo,site,url, ...rest} = data;
 	let updateData = {				
 		...rest,
@@ -49,34 +47,41 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 		} 
 		updateData = {...updateData, ...ProdutosHist}
 	}	
+	if ( alerta.type !== cMsgtypeprops.noChange) {
+        try{             
+            if (data.disponivel) {
+                const dtIni = old.notificadoAt ? old.notificadoAt : old.createdAt;
+                const dtNow = new Date();
+                const diff =(dtNow.getTime() - dtIni.getTime()) / 1000 / 60;
+                if (!old.notificadoAt || diff > 10){                    
+                    data.notificadoAt = new Date();
+                }
+            }        
 
-	if ( alerta.type !== msgtypeprops.noChange) {
-		try{
-			await prisma.$connect;
+            await prisma.$connect;
 
-			const result = await prisma.produtos.update({
-					where:{
-						id: old.id
-					},
-					data: updateData		
-				})
+            const result = await prisma.produtos.update({
+                    where:{
+                        id: old.id
+                    },
+                    data: updateData		
+                })
 
-			await prisma.$disconnect;
-			if (data.disponivel) {
-			await sendNotifications(data, alerta.type, old);
-			}
-			return result;
-		}catch(e){
-			console.log(e.message);
-		}		
-	} else {
-		return
-	}
-	
+            await prisma.$disconnect;
+            if (data.notificadoAt) {
+              await sendNotifications(data, alerta.type, old);
+            }
+            return result;
+        }catch(e){
+            console.log(e.message);
+        }	
+    }	
+
 }
 
 async function hasProdutos(data : Produtos){
 	try{
+        data.notificadoAt = new Date();
 		await prisma.$connect;
 		const prod = await prisma.produtos.findFirst({
 			where:{
@@ -123,22 +128,22 @@ const logConsole = async ( produto : Produtos, alerta:iAlertsprops)=>{
 
 	if (produto.disponivel){
 		switch(alerta.type){
-		case msgtypeprops.withoutStock:
+		case cMsgtypeprops.withoutStock:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ESTOQUE'.padStart(13, ' ')}] {red - ${produto.titulo}}`);   		  
 			break
-		case msgtypeprops.withStock:
+		case cMsgtypeprops.withStock:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'EM ESTOQUE'.padStart(13, ' ')}] {magenta - ${produto.titulo}}`);  		            
 			break
-		case msgtypeprops.priceIncreased:
+		case cMsgtypeprops.priceIncreased:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'AUMENTOU'.padStart(13, ' ')}] {yellow - ${produto.titulo}}`);  		  
 			break
-		case msgtypeprops.priceDecreased:
+		case cMsgtypeprops.priceDecreased:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'ABAIXOU'.padStart(13, ' ')}] {green - ${produto.titulo}}`);  		  
 			break
-		case msgtypeprops.newProduct:
+		case cMsgtypeprops.newProduct:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'NOVO'.padStart(13, ' ')}] {blue - ${produto.titulo}}`);  
 			break       
-		case msgtypeprops.noChange:
+		case cMsgtypeprops.noChange:
 			await console.log(chalk`{magenta ${siteFormat}} {${disponivelChalk} [disp.: ${disponivelData}]} {cyan [${ precoFormat}]} [${'SEM ALTERACAO'.padStart(13, ' ')}] {gray - ${produto.titulo}}`); 
 			break     
 		default: 

@@ -1,14 +1,9 @@
 import { PrismaClient } from '@prisma/client'
+import {iTelegramprops} from '../utils/types'
 
 const prisma = new PrismaClient()
 
-interface telegramprops {
-    id: string,
-    op: string 
-}
-
-
-async function manageTelegram({id, op} : telegramprops){
+async function manageTelegram({id, op} : iTelegramprops){
 	if(op == 'add'){
         await prisma.telegram.create({
             data:{

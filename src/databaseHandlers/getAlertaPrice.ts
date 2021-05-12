@@ -1,5 +1,6 @@
 import { Produtos } from '@prisma/client';
-import {iAlertsprops, ZeosConfig} from '../config/index'
+import { ZeosConfig} from '../config/index';
+import {iAlertsprops} from '../utils/types';
 
 export const GetAlertaPrice = (oldData: Produtos | undefined, newData : Produtos) => {
     let result : iAlertsprops;
@@ -19,16 +20,7 @@ export const GetAlertaPrice = (oldData: Produtos | undefined, newData : Produtos
 
     // Tornou disponivel    
     } else if (ficouDisponivel){
-      /*   // e baixou o preco
-        if (baixou){
-           result = ZeosConfig.alerts.priceDecreased;
-         // e aumentou o preco  
-        } else if (aumentou){
-          result = ZeosConfig.alerts.priceIncreased;
-          // preço nao mudou so ficou disponivel
-        } else {*/
-           result = ZeosConfig.alerts.withStock;
-      //  }          
+         result = ZeosConfig.alerts.withStock;       
 
      // continua disponivel porem aumentou o preco     
     } else if(newData.disponivel && aumentou){
