@@ -28,12 +28,12 @@ export async function dbStuff(data : Produtos){
 }
 
 async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprops){
+    const dataNow = new Date();
 
-
-	const {id,createdAt,updatedAt,titulo,site,url, ...rest} = data;
+	const {id,createdAt,updatedAt,titulo,notificadoAt,site,url, ...rest} = data;
 	let updateData = {				
 		...rest,
-		updatedAt: new Date()
+		updatedAt: dataNow
 	}
 
 	if (Number(data.preco) != Number(old.preco) || Number(data.preco_desc) != Number(old.preco_desc)  ){
@@ -48,15 +48,25 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 		updateData = {...updateData, ...ProdutosHist}
 	}	
 	if ( alerta.type !== cMsgtypeprops.noChange) {
+        let EnviaMsg : boolean = false;
         try{             
             if (data.disponivel) {
                 const dtIni = old.notificadoAt ? old.notificadoAt : old.createdAt;
-                const dtNow = new Date();
+                const dtNow = dataNow;
                 const diff =(dtNow.getTime() - dtIni.getTime()) / 1000 / 60;
-                if (!old.notificadoAt || diff > 10){                    
-                    data.notificadoAt = new Date();
+                if (diff > 10){                    
+                    EnviaMsg = alerta.ativo;
                 }
-            }        
+            }               
+
+            if (EnviaMsg) {
+              const _notificadoAt = {
+                notificadoAt: dataNow 
+              }
+              updateData = {...updateData, ..._notificadoAt }  
+            }
+
+            console.log(EnviaMsg, updateData)
 
             await prisma.$connect;
 
@@ -68,7 +78,7 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
                 })
 
             await prisma.$disconnect;
-            if (data.notificadoAt && alerta.ativo) {
+            if (EnviaMsg) {
               await sendNotifications(data, alerta.type, old);
             }
             return result;

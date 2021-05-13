@@ -8,9 +8,9 @@ export default async (body : string | undefined, descricao: string) => {
         const listagem = body.substring(body.indexOf('<script type="application/ld+json">[{"@context":')+35, body.indexOf("}]</script>")+2);   
         const dados : iPichauItemprops[] = JSON.parse(listagem)
 
-        const totalFormat = `${dados.length}`.padStart(3,' ')
+        /*const totalFormat = `${dados.length}`.padStart(3,' ')
         const siteFormat = `[${'Pichau'.padStart(8,' ')}]`
-        console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${descricao}`);  
+        console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${descricao}`); */ 
     
         for (const [idx, item] of dados.entries()) {  
             result.push({

@@ -31,9 +31,9 @@ export default async (url : urlprops ) => {
     const $ = cheerio.load(body);
     const list = await  $('div#produto').find('div.commerce_columns_item_inner');
 
-    const totalFormat = `${list.length}`.padStart(3,' ')
+   /* const totalFormat = `${list.length}`.padStart(3,' ')
     const siteFormat = `[${'Terabyte'.padStart(8,' ')}]`
-    console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${url.url.nome}`);  
+    console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${url.url.nome}`);  */
     
     await list.each(async (i: number, item:any) => {
       const dados = {

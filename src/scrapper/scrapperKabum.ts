@@ -9,9 +9,9 @@ export default async (body : string | undefined, descricao: string) => {
         const listagem = body.substring(body.indexOf("const listagemDados =")+21, body.indexOf("const listagemErro "));       
         const dados : iScrapperprops[] =  JSON.parse(listagem)   
 
-        const totalFormat = `${dados.length}`.padStart(3,' ')
+       /* const totalFormat = `${dados.length}`.padStart(3,' ')
         const siteFormat = `[${'Kabum'.padStart(8,' ')}]`
-        console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${descricao}`);
+        console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${descricao}`);*/
         
         for (const [idx, item] of dados.entries()) {  
             result.push({
