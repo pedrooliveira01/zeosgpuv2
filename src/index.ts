@@ -2,7 +2,7 @@
 import {genUrlsKabum,genUrlsPichau,genUrlsTerabyte} from './utils/index'
 import {urlprops} from './utils/types'
 import {default as Scrapper} from './scrapper'
-import {startTelegramBot} from './utils/notifications'
+import {startTelegramBot, sendTelegram} from './utils/notifications'
 import {ZeosConfig} from './config';
 
 async function RunApp(url:urlprops, timeout:number){
@@ -53,6 +53,7 @@ async function main(){
     console.log('Sistema Iniciado')  
     if(ZeosConfig.alerts.sendTelegramMsg) {
       startTelegramBot();       
+      sendTelegram('*ZeosGPU inicializado, em busca de preços...*')
     }
 
     if (ZeosConfig.sites.kabum){

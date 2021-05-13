@@ -89,7 +89,6 @@ export async function sendTelegram(msg: string){
 }
 
 export async function startTelegramBot(){
-    console.log('BOT Start ')
     bot.on('text', async(msg: any) => {
         const chatId = String(msg.chat.id);
         switch(msg.text){
