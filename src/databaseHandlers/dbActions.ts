@@ -49,7 +49,7 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 	}	
 	if ( alerta.type !== cMsgtypeprops.noChange) {
         try{             
-            if (data.disponivel) {
+            if (data.disponivel && alerta.ativo) {
                 const dtIni = old.notificadoAt ? old.notificadoAt : old.createdAt;
                 const dtNow = new Date();
                 const diff =(dtNow.getTime() - dtIni.getTime()) / 1000 / 60;

@@ -18,7 +18,7 @@ export const ZeosConfig =
             icon : '📦'
         },
         withoutStock: {
-            ativo: true,            
+            ativo: false,            
             msg : 'Acabou o estoque!',
             color : '#00ff00',
             type : cMsgtypeprops.withoutStock,
