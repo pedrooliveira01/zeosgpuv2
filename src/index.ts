@@ -53,7 +53,7 @@ async function main(){
     console.log('Sistema Iniciado')  
     if(ZeosConfig.alerts.sendTelegramMsg) {
       startTelegramBot();       
-      sendTelegram('*ZeosGPU inicializado, em busca de preços...*')
+      sendTelegram('*ZeosGPU inicializado, em busca de precos...*')
     }
 
     if (ZeosConfig.sites.kabum){
