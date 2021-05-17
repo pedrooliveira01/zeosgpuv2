@@ -20,6 +20,8 @@ export default async (data:urlprops) =>{
   if (data.type === 'pichau'){  
     result = await ScrapperPichau( await getHTML(data.url.link), data.url.nome );       
   }  
-   
-  await SaveData(result) 
+  
+  if (result && result.length>0){
+    await SaveData(result) 
+  }
 } 

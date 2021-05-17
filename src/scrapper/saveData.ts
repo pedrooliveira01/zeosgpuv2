@@ -7,7 +7,7 @@ async function saveDataPromise(data : Produtos) {
   }   
 }
 
-export default async (data : Produtos[]) => {
+export default async (data : Produtos[]) => {   
   for (const [idx, produto] of data.entries()) {
     await saveDataPromise(produto);
   }

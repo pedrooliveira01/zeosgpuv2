@@ -47,6 +47,7 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 		} 
 		updateData = {...updateData, ...ProdutosHist}
 	}	
+ 
 	if ( alerta.type !== cMsgtypeprops.noChange) {
         let EnviaMsg : boolean = false;
         try{             
@@ -66,7 +67,7 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
               updateData = {...updateData, ..._notificadoAt }  
             }
 
-            console.log(EnviaMsg, updateData)
+            //console.log(EnviaMsg, updateData)
 
             await prisma.$connect;
 

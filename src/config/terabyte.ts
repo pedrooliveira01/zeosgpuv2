@@ -13,4 +13,6 @@ export default
     nome: "RX 5700"}
  ,{ link: "https://www.terabyteshop.com.br/busca?str=placa+de+v%C3%ADdeo+rx+6700",
     nome: "RX 6700"}
+ ,{ link: "https://www.terabyteshop.com.br/busca?str=placa+de+v%C3%ADdeo+rx+6800",
+    nome: "RX 6800"}    
 ]

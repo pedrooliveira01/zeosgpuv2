@@ -31,11 +31,17 @@ export default async (url : urlprops ) => {
     const $ = cheerio.load(body);
     const list = await  $('div#produto').find('div.commerce_columns_item_inner');
 
+
    /* const totalFormat = `${list.length}`.padStart(3,' ')
     const siteFormat = `[${'Terabyte'.padStart(8,' ')}]`
     console.log(`${siteFormat} Total: ${totalFormat} | Busca: ${url.url.nome}`);  */
-    
+
+    const _list : any[] = []
     await list.each(async (i: number, item:any) => {
+       return _list.push(item)
+    })  
+    
+    for (const [idx, item] of _list.entries()) {     
       const dados = {
         titulo : await $(item).find('div.commerce_columns_item_caption').find('a').attr('title'),
         url : await $(item).find('div.commerce_columns_item_caption').find('a').attr('href'),
@@ -58,9 +64,10 @@ export default async (url : urlprops ) => {
         notificadoAt: null              
       }  )      
     
-    });
+    };
 
-     
+    return result
+    
   } catch (error) {
     console.log(error);
     return result
