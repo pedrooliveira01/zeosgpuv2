@@ -12,27 +12,36 @@ async function RunApp(url:urlprops, timeout:number){
   });
 }
 
-
 async function RunAppKabum(){
   const urls:urlprops[] = genUrlsKabum();
-
-  if (urls){   
-    for (const [idx, url] of urls.entries()) {
-        await RunApp(url, 1000)  
-     }  
+  try {
+      if (urls){   
+        for (const [idx, url] of urls.entries()) {
+            await RunApp(url, 1000)  
+         }  
+        RunAppKabum();        
+      }  
+      
+  } catch (error) {
+    console.log('ERRO:',error.message)      
     RunAppKabum();        
-  }  
+  }
 }
 
 async function RunAppPichau(){
   const urls:urlprops[] = genUrlsPichau();
-
-  if (urls){   
-    for (const [idx, url] of urls.entries()) {
-        await RunApp(url, 1000)  
-     }  
-     RunAppPichau();        
-  }  
+  try {
+      if (urls){   
+        for (const [idx, url] of urls.entries()) {
+            await RunApp(url, 1000)  
+         }  
+         RunAppPichau();        
+      }  
+      
+  } catch (error) {
+    console.log('ERRO:',error.message)      
+    RunAppPichau();        
+  }
 
 }
 
@@ -40,10 +49,15 @@ async function RunAppTerabyte(){
   const urls:urlprops[] = genUrlsTerabyte();
 
   if (urls){   
-    for (const [idx, url] of urls.entries()) {
-        await RunApp(url, 1000)  
-     }  
-     RunAppTerabyte();        
+    try {
+        for (const [idx, url] of urls.entries()) {
+            await RunApp(url, 1000)  
+         }  
+         RunAppTerabyte();     
+    } catch (error) {
+        console.log('ERRO:',error.message)
+        RunAppTerabyte();   
+    }  
   }  
 }
 
