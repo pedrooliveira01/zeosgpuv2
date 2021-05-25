@@ -25,7 +25,7 @@ export interface iPichaOffersprops {
   
 export interface iPichauItemprops {
     name: string,
-    offers:iPichaOffersprops[]
+    offers:iPichaOffersprops
 }  
 
 export interface iAlertsprops {
