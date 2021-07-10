@@ -38,3 +38,12 @@ model ProdutosHist {
   preco_desc   Decimal
   createdAt    DateTime @default(now())
 }
+
+model Anuncios {
+  id           Int      @id @default(autoincrement())
+  message      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime? @updatedAt
+  sleep        Int
+  ativo        Int
+}

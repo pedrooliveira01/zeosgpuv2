@@ -7,6 +7,7 @@ import {cMsgtypeprops, cAlertaEmpty} from '../utils/types'
 export const ZeosConfig = 
 {
     emitSockets:false,
+    anuncios: true,
     alerts:{
         sendDiscordHook:false,
         sendTelegramMsg:true,

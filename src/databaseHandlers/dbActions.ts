@@ -1,23 +1,20 @@
-import {sendNotifications} from '../utils/notifications';
-import { PrismaClient, Produtos } from '@prisma/client';
-import { cAlertaEmpty, iAlertsprops, cMsgtypeprops} from '../utils/types'
+import { Produtos } from '@prisma/client';
+import { iAlertsprops, cMsgtypeprops} from '../utils/types'
 import {GetAlertaPrice} from './getAlertaPrice';
 const chalk = require('chalk');
-
-const prisma = new PrismaClient({
-	//log: ['query'],
-  })
+import {getProdutoByUrl, updateProduto, createProduto} from './dbProdutos';
+import {sendNotifications} from '../utils/notifications';
 
 export async function dbStuff(data : Produtos){
 	try{
-		let Produtos = await hasProdutos(data);
-		if(Produtos){	
-			const result = await GetAlertaPrice(Produtos, data);			  
-			await updateProdutos(Produtos, data, result);	
+		const Produto = await getProdutoByUrl(data.url);
+		if (Produto) {	
+			const result = await GetAlertaPrice(Produto, data);			  
+			await prepareUpdateProduto(Produto, data, result);	
 			logConsole(data,result)
 		}else{
 			const result = await GetAlertaPrice(undefined,data);			
-			await createProdutos(data, result);	
+			await prepareCreateProduto(data, result);	
 			logConsole(data,result)
 		}
 	}catch(e){
@@ -27,7 +24,7 @@ export async function dbStuff(data : Produtos){
     }
 }
 
-async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprops){
+async function prepareUpdateProduto(old:Produtos, data : Produtos, alerta: iAlertsprops){
     const dataNow = new Date();
 
 	const {id,createdAt,updatedAt,titulo,notificadoAt,site,url, ...rest} = data;
@@ -67,18 +64,8 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
               updateData = {...updateData, ..._notificadoAt }  
             }
 
-            //console.log(EnviaMsg, updateData)
+			const result = await updateProduto(updateData, old.id);
 
-            await prisma.$connect;
-
-            const result = await prisma.produtos.update({
-                    where:{
-                        id: old.id
-                    },
-                    data: updateData		
-                })
-
-            await prisma.$disconnect;
             if (EnviaMsg) {
               await sendNotifications(data, alerta.type, old);
             }
@@ -90,46 +77,12 @@ async function updateProdutos(old:Produtos, data : Produtos, alerta: iAlertsprop
 
 }
 
-async function hasProdutos(data : Produtos){
-	try{
-        data.notificadoAt = new Date();
-		await prisma.$connect;
-		const prod = await prisma.produtos.findFirst({
-			where:{
-				url: data.url
-			}
-		})
-		await prisma.$disconnect;
-		return prod
-	}catch(e){
-		console.log(e.message);
+async function prepareCreateProduto(data : Produtos, alerta: iAlertsprops){
+	const produto = await createProduto(data);
+	if (produto && produto.disponivel) {	      
+		await sendNotifications(data, alerta.type, undefined);
 	}
-}
-
-async function createProdutos(data: Produtos, alerta: iAlertsprops){
-	const {id, ...props} = data;
-	try{
-		await prisma.$connect;
-		await prisma.produtos.create({
-            data:{
-				...props
-				,ProdutosHist:{
-					create:{						
-						preco: data.preco,
-						preco_desc: data.preco_desc											
-					}
-				} 
-			}	
-        });
-		await prisma.$disconnect;
-		if (data.disponivel) {	      
-		  await sendNotifications(data, alerta.type, undefined);
-		}
-	}catch(e){
-		console.log(e.message);
-	}
-}
-
+}  
 
 const logConsole = async ( produto : Produtos, alerta:iAlertsprops)=>{
 	const disponivelChalk = produto.disponivel ? 'green' : 'gray'

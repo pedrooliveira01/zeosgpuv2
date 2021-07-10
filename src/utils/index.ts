@@ -1,6 +1,5 @@
-import {kabumArr,terabyteArr,pichauArr} from '../config'
-import {siteArr, urlprops} from './types'
-
+import {kabumArr,terabyteArr,pichauArr} from '../config';
+import {siteArr, urlprops} from './types';
 
 export function genUrlsKabum(){  
   return genUrls(kabumArr,'kabum')
@@ -22,6 +21,10 @@ function genUrls(Arr:siteArr[], type:string){
   return urls;
 }
 
+export function getDifferenceInSeconds(Inicio: Date, Fim: Date) {
+  const diffInMs = (Fim.getTime() - Inicio.getTime()) / 1000;
+  return diffInMs;
+}
 
 
 
