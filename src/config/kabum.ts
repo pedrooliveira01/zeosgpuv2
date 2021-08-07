@@ -1,23 +1,19 @@
 
 export default 
-[ {link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rtx+3070&btnG=",
+[ {link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rtx+3070&page_number=1&page_size=20&facet_filters=eyJNZW3Ds3JpYSI6WyI4R0IiXX0%3D&sort=most_searched&include=gift",
    nome: "RTX 3070"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+gtx+1660+super&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=gtx+1660&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdfQ%3D%3D&sort=most_searched&include=gift",
     nome: "GTX 1660 super"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rtx+3060&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rtx+3060&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdLCJNZW3Ds3JpYSI6WyIxMkdCIl19&sort=most_searched&include=gift",
     nome: "RTX 3060 e RTX 3060 ti"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rtx+3080&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rtx+3080&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdLCJNZW3Ds3JpYSI6WyIxMkdCIl19&sort=most_searched&include=gift",
     nome: "RTX 3080"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rx+6700&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rx+6700&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdLCJNZW3Ds3JpYSI6WyIxMkdCIl19&sort=most_searched&include=gift",
     nome: "RX 6700"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rtx+2060&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=gtx+2060&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdfQ%3D%3D&sort=most_searched&include=gift",
     nome: "RTX 2060"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rx+570&btnG=",
-    nome: "RX 570"}
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rx+5700&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rx+5700&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdLCJNZW3Ds3JpYSI6WyIxMkdCIl19&sort=most_searched&include=gift",
     nome: "RX 5700"}                        
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rx+6800&btnG=",
+ ,{ link: "https://servicespub.prod.api.aws.grupokabum.com.br/catalog/v1/products?query=rx+6800&page_number=1&page_size=20&facet_filters=eyJjYXRlZ29yeSI6WyJIYXJkd2FyZSJdLCJNZW3Ds3JpYSI6WyIxMkdCIl19&sort=most_searched&include=gift",
     nome: "RX 6800"}   
- ,{ link: "https://www.kabum.com.br/cgi-local/site/listagem/listagem.cgi?string=video+rx+580&btnG=",
-    nome: "RX 580"}       
 ]

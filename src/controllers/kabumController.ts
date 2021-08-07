@@ -4,7 +4,7 @@ import {RunApp} from './runApp';
 
 export default async function RunAppKabum(){
     const urls:urlprops[] = genUrlsKabum();
-    console.log('ENTROU')
+    //console.log('ENTROU')
     try {
         if (urls){   
           for (const [idx, url] of urls.entries()) {              

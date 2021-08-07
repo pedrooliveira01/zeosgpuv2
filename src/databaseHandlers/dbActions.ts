@@ -85,6 +85,7 @@ async function prepareCreateProduto(data : Produtos, alerta: iAlertsprops){
 }  
 
 const logConsole = async ( produto : Produtos, alerta:iAlertsprops)=>{
+	
 	const disponivelChalk = produto.disponivel ? 'green' : 'gray'
 	const disponivelData = produto.disponivel ? 'Sim' : 'Nao'
 	const precoFormat = `R$ ${produto.preco_desc.toFixed(2)}`.padStart(11,' ')

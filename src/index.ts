@@ -8,7 +8,7 @@ async function main(){
 
     if(ZeosConfig.alerts.sendTelegramMsg) {
       startTelegramBot();       
-      sendTelegram('*ZeosGPU inicializado, em busca de precos...*')
+      //sendTelegram('*ZeosGPU inicializado, em busca de precos...*')
     }
 
     if (ZeosConfig.sites.kabum){
