@@ -13,4 +13,6 @@ export default
     nome: "RX 580, RX 570, RX 5500, RX 5700"}
  ,{ link: "https://www.pichau.com.br/hardware/placa-de-video?rgpu=6304%2C6305",
     nome: "RTX 3070, RTX 3080"}    
+ ,{ link: "https://www.pichau.com.br/hardware/placa-de-video?rgpu=6336,6337,6362,6402,741,742,841   ",
+    nome: "RX 5700, RX 6700, RX 6800"}    
 ]
